@@ -5,11 +5,10 @@ import re
 import os
 
 class DomainManagerDownloader:
+    PROJECT_NAME = "MultySiteDownloader"
     USER_FOLDER = os.environ['USERPROFILE']
-    VIDEOS_FOLDER = os.path.join(USER_FOLDER, 'Videos')
-
-    def __init__(self):
-        self.multi_site_downloader_folder = os.path.join(self.VIDEOS_FOLDER, 'MultySiteDownloader')
+ 
+    def __init__(self) -> None:
         self.supported_domain_variations: Dict = {"www.youtube.com": ['youtube.com', 'youtu.be']}
         self.supported_domains_functions: Dict = {"www.youtube.com": YoutubeDownloader}
         self.running = True
@@ -121,7 +120,7 @@ class DomainManagerDownloader:
         """
         if domain_url:
             site_functions = self.supported_domains_functions.get(domain_url)
-            return site_functions(self.url, self.multi_site_downloader_folder).run()  
+            return site_functions(self.url, self.USER_FOLDER, self.PROJECT_NAME).run()  
         else:
             print(f"{domain_url} is not a supported website!")
             return None

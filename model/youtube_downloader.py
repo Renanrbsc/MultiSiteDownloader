@@ -6,12 +6,13 @@ import os
 class YoutubeDownloader:
     MAX_ATTEMPT = 2
     WEBSITE_NAME = 'YouTube'
+    
 
-    def __init__(self, url: str, path_output: str):
+    def __init__(self, url: str, path_output: str, project_name: str) -> None:
         self.attempts = 0
         self.url_youtube = pytube_youtube(url)
-        self.video_output_folder = os.path.join(path_output, self.WEBSITE_NAME, 'Videos')
-        self.audio_output_folder = os.path.join(path_output, self.WEBSITE_NAME, 'Audios') 
+        self.path_output_videos = os.path.join(path_output, "Videos", project_name, self.WEBSITE_NAME)
+        self.path_output_audios = os.path.join(path_output, "Music", project_name, self.WEBSITE_NAME)
 
 
     def get_properties_by_url(self) -> None:
@@ -210,9 +211,9 @@ class YoutubeDownloader:
         :return: None
         """ 
         if option_video_audio in [0, 1]:
-            self.request_and_make_download(file="Video", format_files=self.video_format, path_output=self.video_output_folder)
+            self.request_and_make_download(file="Video", format_files=self.video_format, path_output=self.path_output_videos)
         if option_video_audio in [0, 2]:
-            self.request_and_make_download(file="Audio", format_files=self.audio_format, path_output=self.audio_output_folder)
+            self.request_and_make_download(file="Audio", format_files=self.audio_format, path_output=self.path_output_audios)
         return None
 
 
